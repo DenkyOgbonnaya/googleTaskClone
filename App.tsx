@@ -15,6 +15,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import Navigations from './src/navigations';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Provider } from 'react-redux';
+import store from "./src/store";
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -31,7 +33,10 @@ function App(): JSX.Element {
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <NavigationContainer>
+        <Provider store={store}>
         <Navigations />
+        </Provider>
+       
       </NavigationContainer>
     </SafeAreaView>
   );
