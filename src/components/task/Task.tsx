@@ -4,6 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import CheckBox from '../checkBox/CheckBox';
 import { theme } from 'styles/theme';
 import { Star } from 'assets';
+import { get12HoursTimeFromDateTime } from 'utills/helpers';
 
 interface IProps {
   task: ITask;
@@ -53,7 +54,8 @@ const Task: FC<IProps> = ({ task }) => {
           },
         ]}>
         <Text style={[theme.textVariants.body, { color: theme.colors.blue }]}>
-          {task.date} {task.time}
+          {new Date(task.date ?? '').toDateString()}{' '}
+          {get12HoursTimeFromDateTime(task.date ?? '')}
         </Text>
       </View>
     </View>

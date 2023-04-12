@@ -15,6 +15,8 @@ import {
 } from 'react-native';
 import { RootState } from 'store';
 import { get12HoursTimeFromDateTime } from 'utills/helpers';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { addTask } from 'screens/tasks/taskSlice';
 
 interface IProps {
   onClose: () => void;
@@ -28,11 +30,14 @@ const TaskForm: FC<IProps> = ({ onClose }) => {
     time: '',
     isComplete: false,
     isStarred: false,
+    list: '',
   });
   const [showDetais, setShowDetails] = useState(false);
   const [showDateTime, setShowDateTime] = useState(false);
   const [date, setDate] = useState(new Date());
+  const { activeList } = useAppSelector((state: RootState) => state.list);
   const detaisRef = useRef<TextInput>(null);
+  const dispatch = useAppDispatch();
 
   const handleShowDetails = () => {
     setShowDetails(true);
@@ -43,6 +48,11 @@ const TaskForm: FC<IProps> = ({ onClose }) => {
   };
 
   const handleSave = () => {
+    const theTask: ITask = {
+      ...state,
+      list: activeList,
+    };
+    dispatch(addTask(theTask));
     onClose();
   };
   const handleToggleDateTime = () => {

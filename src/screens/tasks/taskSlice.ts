@@ -11,18 +11,18 @@ const initialState: TaskState = {
   tasks: [],
 };
 
-export const counterSlice = createSlice({
+export const taskSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
     addTask: (state, action: PayloadAction<ITask>) => {
-      state.tasks.concat(action.payload);
+      state.tasks = state.tasks.concat(action.payload);
     },
   },
 });
 
-export const { addTask } = counterSlice.actions;
+export const { addTask } = taskSlice.actions;
 
 export const selectTasks = (state: RootState) => state.tasks.tasks;
 
-export default counterSlice.reducer;
+export default taskSlice.reducer;

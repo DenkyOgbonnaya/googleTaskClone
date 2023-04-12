@@ -13,6 +13,9 @@ import { RootState } from 'store';
 import ListTask from './components/listTask/ListTask';
 import { Overlay, TitleBar } from 'components';
 import ListForm from 'components/listForm/ListForm';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { setActiveList } from './listSlice';
+import StarredTask from 'components/starredTasks/StarredTasks';
 
 const Dashboard = () => {
   const layout = useWindowDimensions();
@@ -20,8 +23,7 @@ const Dashboard = () => {
   const [showAddList, setShowAddList] = React.useState(false);
   const { theme } = useAppSelector((state: RootState) => state.theme);
   const { lists } = useAppSelector((state: RootState) => state.list);
-
-  console.log(lists, 'LIST');
+  const dispatch = useAppDispatch();
 
   const dynamicLists = lists.map(list => ({
     key: list.title,
@@ -39,6 +41,9 @@ const Dashboard = () => {
 
   const renderScene = ({ route }: SceneRendererProps & { route: Route }) => {
     for (const list of lists) {
+      if (route.key === 'star') {
+        return <StarredTask />;
+      }
       if (list.title === route.key) {
         return <ListTask listTitle={list.title} />;
       }
@@ -47,6 +52,7 @@ const Dashboard = () => {
 
   const handleTabPress = (index: number) => {
     setIndex(index);
+    dispatch(setActiveList(routes[index].title));
     if (lists.length + 2 - 1 === index) {
       toggleAddList();
     }

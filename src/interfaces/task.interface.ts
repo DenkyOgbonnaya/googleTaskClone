@@ -5,4 +5,5 @@ export interface ITask {
   time?: string;
   isStarred?: boolean;
   isComplete?: boolean;
+  list: string;
 }

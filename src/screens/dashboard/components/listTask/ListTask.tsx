@@ -1,31 +1,17 @@
 import { ListStatus, ToggleableTask } from 'components';
 import TaskList from 'components/taskList/TaskList';
+import { useAppSelector } from 'hooks/useAppSelector';
 import { ITask } from 'interfaces/task.interface';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { RootState } from 'store';
 
 interface IProps {
   listTitle: string;
 }
 const ListTask: FC<IProps> = ({ listTitle }) => {
-  const listTasks: ITask[] = [
-    {
-      title: 'Testx task',
-      details: 'Hello this is my first task',
-      date: 'Tommorrow',
-      time: '4pm',
-      isStarred: true,
-      isComplete: true,
-    },
-    {
-      title: 'Testx task2',
-      details: 'Hello this is my first task',
-      date: 'Tommorrow',
-      time: '4pm',
-      isStarred: false,
-      isComplete: false,
-    },
-  ];
+  const { tasks } = useAppSelector((state: RootState) => state.tasks);
+  const listTasks: ITask[] = tasks.filter(task => task.list === listTitle);
   const isCompleted = false;
 
   if (isCompleted)
@@ -51,7 +37,7 @@ const ListTask: FC<IProps> = ({ listTitle }) => {
   return (
     <View style={styles.listContainer}>
       <TaskList tasks={listTasks} />
-      <ToggleableTask title="Completed" tasks={listTasks} />
+      {/* <ToggleableTask title="Completed" tasks={listTasks} /> */}
     </View>
   );
 };
