@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { View, Text, Platform, StyleSheet } from 'react-native';
 import TabBarAdvanceButton from './components/TabBarAdvanceButton';
-import { Icon } from 'components';
+import { Icon, Overlay } from 'components';
 import Hello from 'screens/Hello';
 import { MenuHorizontal, MenuList } from 'assets';
 import TaskForm from 'components/taskForm/TaskForm';
@@ -17,11 +17,11 @@ import { LIST_HOME_SCREEN } from './constants/list';
 const BottomBar = createBottomTabNavigator();
 
 function BottomTabNavigation() {
-  const [showMenu, setShowMenu] = useState(false);
+  const [showAddTask, setShowAddTask] = useState(false);
   const { theme } = useAppSelector((state: RootState) => state.theme);
   const barColor = theme.colors.backgroundSecondary;
-  const toggleShowMenu = () => {
-    setShowMenu(state => !state);
+  const toggleShowAddTask = () => {
+    setShowAddTask(state => !state);
   };
 
   return (
@@ -76,6 +76,12 @@ function BottomTabNavigation() {
               <TabBarAdvanceButton bgColor={barColor} {...props} />
             ),
           }}
+          listeners={() => ({
+            tabPress: event => {
+              event.preventDefault();
+              toggleShowAddTask();
+            },
+          })}
         />
 
         <BottomBar.Screen
@@ -97,12 +103,14 @@ function BottomTabNavigation() {
           listeners={() => ({
             tabPress: event => {
               event.preventDefault();
-              toggleShowMenu();
+              toggleShowAddTask();
             },
           })}
         />
       </BottomBar.Navigator>
-      {showMenu ? <TaskForm /> : null}
+      <Overlay isVisible={showAddTask} onClose={toggleShowAddTask}>
+        <TaskForm onClose={toggleShowAddTask} />
+      </Overlay>
     </>
   );
 }

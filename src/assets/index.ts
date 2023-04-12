@@ -7,8 +7,12 @@ import FolderCheck from './svgs/folderCheck.svg';
 import ChevronDown from './svgs/chevronDown.svg';
 import ChevronUp from './svgs/chevronUp.svg';
 import CheckMark from './svgs/checkmark.svg';
+import Clock from './svgs/clock.svg';
+import Menu3 from './svgs/menu3.svg';
 
 export {
+  Clock,
+  Menu3,
   CheckMark,
   Plus,
   MenuHorizontal,
