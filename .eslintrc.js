@@ -13,6 +13,7 @@ module.exports = {
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/consistent-type-imports': 'off',
     semi: [0, 'always'],
     'prettier/prettier': 'error',
   },

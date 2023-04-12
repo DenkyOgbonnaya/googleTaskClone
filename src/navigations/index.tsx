@@ -1,6 +1,8 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Hello from '../screens/Hello';
+
+import { LIST_DASHBOARD_SCREEN } from './constants/list';
+import BottomTabNavigation from './BottomTab';
 
 export const Navigations = () => {
   const Stack = createNativeStackNavigator();
@@ -8,8 +10,14 @@ export const Navigations = () => {
   const Screen = Stack.Screen;
 
   return (
-    <Navigator initialRouteName="Hello">
-      <Screen name="Hello" component={Hello} />
+    <Navigator initialRouteName={LIST_DASHBOARD_SCREEN}>
+      <Screen
+        name={LIST_DASHBOARD_SCREEN}
+        component={BottomTabNavigation}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Navigator>
   );
 };

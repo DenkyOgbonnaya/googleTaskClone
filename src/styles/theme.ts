@@ -6,11 +6,16 @@ const palette = {
   white: '#F0F2F3',
   gray: '#212529',
   blue: '#a3cef1',
+  grayDark: '#403d39',
+  graySecondary: '#d6d6d6',
+  grayPrimary: '#f4f4f9',
+  gold: '#ffd100',
 };
 
 export const theme = {
   colors: {
-    background: palette.white,
+    background: palette.gray,
+    backgroundSecondary: palette.grayDark,
     foreground: palette.black,
     primary: palette.purple,
     success: palette.green,
@@ -18,6 +23,10 @@ export const theme = {
     failure: palette.red,
     faded: palette.gray,
     blue: palette.blue,
+    menu: palette.white,
+    graySecondary: palette.graySecondary,
+    grayPrimary: palette.grayPrimary,
+    gold: palette.gold,
   },
   spacing: {
     s: 8,
@@ -28,12 +37,14 @@ export const theme = {
   textVariants: {
     header: {
       fontFamily: 'Roboto-Regular',
-      fontSize: 36,
+      fontSize: 18,
       fontWeight: 'bold',
+      color: palette.grayPrimary,
     },
     body: {
       fontFamily: 'Inter-Regular',
       fontSize: 16,
+      color: palette.graySecondary,
     },
   },
 };
