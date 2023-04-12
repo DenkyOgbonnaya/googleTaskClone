@@ -9,32 +9,48 @@ import {
   SceneRendererProps,
   Route,
 } from 'react-native-tab-view';
-import Hello from 'screens/Hello';
 import { RootState } from 'store';
 import ListTask from './components/listTask/ListTask';
-import { TitleBar } from 'components';
+import { Overlay, TitleBar } from 'components';
+import ListForm from 'components/listForm/ListForm';
 
 const Dashboard = () => {
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
+  const [showAddList, setShowAddList] = React.useState(false);
   const { theme } = useAppSelector((state: RootState) => state.theme);
+  const { lists } = useAppSelector((state: RootState) => state.list);
 
-  const [routes] = React.useState([
-    { key: 'starred', title: 'Star' },
-    { key: 'myList', title: 'My List' },
-  ]);
+  console.log(lists, 'LIST');
+
+  const dynamicLists = lists.map(list => ({
+    key: list.title,
+    title: list.title,
+  }));
+  const routes = [
+    { key: 'star', title: '☆' },
+    ...dynamicLists,
+    { key: 'new', title: '＋New List' },
+  ];
+
+  const toggleAddList = () => {
+    setShowAddList(!showAddList);
+  };
 
   const renderScene = ({ route }: SceneRendererProps & { route: Route }) => {
-    switch (route.key) {
-      case 'starred':
-        return <Hello />;
-      case 'myList':
-        return <ListTask listTitle="hELLO" />;
-      default:
-        return null;
+    for (const list of lists) {
+      if (list.title === route.key) {
+        return <ListTask listTitle={list.title} />;
+      }
     }
   };
 
+  const handleTabPress = (index: number) => {
+    setIndex(index);
+    if (lists.length + 2 - 1 === index) {
+      toggleAddList();
+    }
+  };
   return (
     <View
       style={[
@@ -48,7 +64,7 @@ const Dashboard = () => {
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
-        onIndexChange={setIndex}
+        onIndexChange={handleTabPress}
         initialLayout={{ width: layout.width }}
         swipeEnabled={false}
         renderTabBar={props => (
@@ -58,7 +74,7 @@ const Dashboard = () => {
             style={{
               backgroundColor: theme.colors.background,
               elevation: 0,
-              width: '50%',
+              //   width: '50%',
               marginBottom: 20,
             }}
             labelStyle={{ marginLeft: 0, paddingLeft: 0 }}
@@ -74,6 +90,9 @@ const Dashboard = () => {
           />
         )}
       />
+      <Overlay isVisible={showAddList} onClose={toggleAddList}>
+        <ListForm onClose={toggleAddList} />
+      </Overlay>
     </View>
   );
 };

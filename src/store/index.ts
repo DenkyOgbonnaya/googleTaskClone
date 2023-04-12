@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import listSlice from 'screens/dashboard/listSlice';
 import taskSlice from 'screens/tasks/taskSlice';
 import themeSlice from 'styles/themeSlice';
 
@@ -6,6 +7,7 @@ const store = configureStore({
   reducer: {
     tasks: taskSlice,
     theme: themeSlice,
+    list: listSlice,
   },
 });
 
